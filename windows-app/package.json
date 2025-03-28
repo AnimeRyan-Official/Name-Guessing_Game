@@ -1,0 +1,73 @@
+{
+  "name": "student-name-quiz-desktop",
+  "productName": "Student Name Quiz",
+  "version": "1.0.0",
+  "description": "A desktop application to help teachers learn and remember student names",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "prepare-build": "node build-script.js",
+    "pack": "electron-builder --dir",
+    "dist": "npm run prepare-build && electron-builder",
+    "make-exe": "npm run prepare-build && electron-builder --win --x64"
+  },
+  "keywords": [
+    "education",
+    "student",
+    "names",
+    "quiz",
+    "memory"
+  ],
+  "author": "Your Organization",
+  "license": "MIT",
+  "build": {
+    "appId": "com.yourorganization.studentnamequiz",
+    "productName": "Student Name Quiz",
+    "files": [
+      "build/**/*",
+      "src/**/*",
+      "node_modules/**/*",
+      "resources/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "resources",
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "resources/icon.ico",
+      "artifactName": "${productName}-${version}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Student Name Quiz"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-Portable.${ext}"
+    },
+    "extraResources": [
+      {
+        "from": "../dist",
+        "to": "server",
+        "filter": ["**/*", "!**/public/**"]
+      },
+      {
+        "from": "../shared",
+        "to": "shared"
+      }
+    ],
+    "publish": null
+  }
+}
